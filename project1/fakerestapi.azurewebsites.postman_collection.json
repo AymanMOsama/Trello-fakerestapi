@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "7e661368-2970-4003-8c5a-599d23f84b4c",
+		"name": "fakerestapi.azurewebsites",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23103226"
+	},
+	"item": [
+		{
+			"name": "Get Requests",
+			"item": [
+				{
+					"name": "Get authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// make sure response is \"200 ok\"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// response contain id,id book,firstname,lastname\r",
+									"pm.test(\"response contain id,id book,firstname,lastname\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"idBook\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"firstName\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"lastName\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Base Url}}/api/v1/Authors",
+							"host": [
+								"{{Base Url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author data changed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Test case 1: The author's data is changed in GET request.\r",
+									"\r",
+									"pm.test(\"Author data changed\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include('First Name 500');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Base Url}}/api/v1/Authors/500",
+							"host": [
+								"{{Base Url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"500"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valid idBook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Test Case 1: Searching with valid idBook should return relative data in response body.\r",
+									"\r",
+									"pm.test(\"valid idBook\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include('\"idBook\":2');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Base Url}}/api/v1/Authors/authors/books/2",
+							"host": [
+								"{{Base Url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"authors",
+								"books",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post Reuests",
+			"item": [
+				{
+					"name": "New authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Register a new valid Author successfully and response code \"201 Created\".\r",
+									"\r",
+									"pm.test(\"Status code is 201 Created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"first name and last name should be mendatory\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"ayman\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"osama\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"id\": 500,\"idBook\": 170,\"firstName\": \"ayman\",\"lastName\": \"osama\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Base Url}}/api/v1/Authors",
+							"host": [
+								"{{Base Url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Put Requets",
+			"item": [
+				{
+					"name": "Author update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Test Case 1: Author's data is updated successfully.\r",
+									"\r",
+									"\r",
+									"pm.test(\"Author data updated successfully\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Aymanozz\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"Osamaozz\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 500,\r\n  \"idBook\": 500,\r\n  \"firstName\": \"Aymanozz\",\r\n  \"lastName\": \"Osamaozz\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Base Url}}/api/v1/Authors/1",
+							"host": [
+								"{{Base Url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

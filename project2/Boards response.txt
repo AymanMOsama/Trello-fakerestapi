@@ -1,0 +1,36 @@
+"boards": [
+        {
+            "id": "63106163833f54145a863836",
+            "name": "Trello Api Test",
+            "closed": false,
+            "idOrganization": "631060b1374cda0263585ca6",
+            "pinned": false
+        },
+        {
+            "id": "6283c62315820e6ae5ab156a",
+            "name": "website",
+            "closed": false,
+            "idOrganization": "6283c60a20917678d8967afd",
+            "pinned": false
+        },
+        {
+            "id": "631493cc9e235d021c7751b5",
+            "name": "{AYMANOSAMA20}",
+            "closed": false,
+            "idOrganization": "631060b1374cda0263585ca6",
+            "pinned": false
+        },
+        {
+            "id": "6314941374004401c6cbb117",
+            "name": "{AYMANOSAMA20}",
+            "closed": false,
+            "idOrganization": "631060b1374cda0263585ca6",
+            "pinned": false
+        },
+        {
+            "id": "63106fbd19963a02cc2c4878",
+            "name": "{AYMANOSAMA}",
+            "closed": false,
+            "idOrganization": "631060b1374cda0263585ca6",
+            "pinned": false
+        }

@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "b249b3d4-e2f7-4ebf-9cc8-f08c221a0209",
+		"name": "Trello api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23103226"
+	},
+	"item": [
+		{
+			"name": "Create a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" //test cases on Postman to verify the most important parameters and confirm its default values like closed is false.//\r",
+							"\r",
+							"pm.test(\"Check Board Name\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.name).to.eql(\"{AYMANOSAMA20}\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"values like closed is false.\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.closed).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"permissionLevel,canBePublic,canInvite\", function () {\r",
+							"    console.log(pm.response.json().prefs.canBePublic)\r",
+							"    pm.expect(pm.response.json().prefs.permissionLevel).to.eql(\"private\");\r",
+							"    pm.expect(pm.response.json().prefs.canBePublic).to.equal(true);\r",
+							"    pm.expect(pm.response.json().prefs.canInvite).to.equal(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/boards/?name={AYMANOSAMA20}&key={{apiKey}}&token={{apiToken}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{AYMANOSAMA20}"
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Open Boards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Test case to verify that number of boards in the response is above 1.\r",
+							"pm.test(\"response is above 1\"), function () {\r",
+							"pm.expect(jsonData.Boards[1].id).to.contain(\"6283c62315820e6ae5ab156a\");\r",
+							"pm.expect(jsonData.Boards[1].id).to.c(\"6283c62315820e6ae5ab156a\");\r",
+							"};\r",
+							"\r",
+							" console.log(_.filter(pm.response.json(),'idBoards').length)  \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BasrUrl}}?boards=open&key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BasrUrl}}"
+					],
+					"query": [
+						{
+							"key": "boards",
+							"value": "open"
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//The status code is 200.//\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//Response Body should contain a meaningful message like \"board is removed successfully\". \r",
+							"   pm.test(\"Body matches string\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"board is removed successfully\");\r",
+							"         });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/boards/631493f17cb40500cb7f60cb?&key={{apiKey}}&token={{apiToken}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"boards",
+						"631493f17cb40500cb7f60cb"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BasrUrl}}?key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BasrUrl}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// check id,name,idboard is exist\r",
+							"    pm.test(\"id,name,idboard\", function () {\r",
+							"        pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"        pm.expect(pm.response.text()).to.include(\"idBoard\");\r",
+							"    });\r",
+							"    \r",
+							"    pm.test(\"values like closed is false.\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.closed).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BasrUrllist}}name={MAMO2}&idBoard=63106fbd19963a02cc2c4878&key={{apiKey}}&token={{apiToken}}",
+					"host": [
+						"{{BasrUrllist}}name={MAMO2}&idBoard=63106fbd19963a02cc2c4878&key={{apiKey}}&token={{apiToken}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lists On Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//number of lists in the response is 3 \r",
+							"\r",
+							"const responsejson = pm.response.json();\r",
+							"pm.test(\"First and Last id on Array\")\r",
+							"console.log(_.first(responsejson).id)\r",
+							"pm.expect(_.first(responsejson).id).to.equal(\"6314ea3cc4467525d235a0d6\") ;\r",
+							"console.log(_.last(responsejson).id)\r",
+							"pm.expect(_.last(responsejson).id).to.equal(\"63106fbd19963a02cc2c4881\") ;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/boards/63106fbd19963a02cc2c4878/lists?&key={{apiKey}}&token={{apiToken}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"boards",
+						"63106fbd19963a02cc2c4878",
+						"lists"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive or unarchive a list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Archive or unarchive a list\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._value).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/lists/631499727a62a501acdef04a/closed?key={{apiKey}}&token={{apiToken}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"lists",
+						"631499727a62a501acdef04a",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{apiToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "{{BasrUrl}}",
+			"value": "https://api.trello.com/1/members/me",
+			"type": "string"
+		},
+		{
+			"key": "{{apiKey}}",
+			"value": "a72344a9bdc2e69230e26ec0d843ae05",
+			"type": "string"
+		},
+		{
+			"key": "{{apiToken}}",
+			"value": "ba8e06d72394506cb995936b285f31ee11d72cfa152f378868ee6947d44409cc",
+			"type": "string"
+		}
+	]
+}
